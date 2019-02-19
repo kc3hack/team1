@@ -2,31 +2,58 @@
 # botの制御を行う
 # coding by rurito
 
-from linebot import LineBotApi
-from linebot.models import TextSendMessage
+from flask import Flask, request, abort
+
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,
+)
+import os
+
+app = Flask(__name__)
 
 # line botのアクセストークンを持ってくる
 # トークン流出を避けるため別のテキストファイルでトークンを管理しています。
 
-def get_token():
-    f = open('token.txt')
-    lines = f.readline()
-    return lines.replace('\n','')
+f = open('token.txt')
+lines = f.readline()
+line_bot_api = LineBotApi(lines.replace('\n',''))
 
-def main():
-    
-    # トークンを取得
-    token = get_token()
+t = open('handle.txt')
+lines = t.readline()
+handler = WebhookHandler(lines.replace('\n',''))
 
-    # api読み込み
-    line_bot_api = LineBotApi(token)
+@app.route("/callback", methods=['POST'])
+def callback():
 
-    user_id = "ruriro0125"
-    messages = TextSendMessage(text="進捗出せよ")
+    # get X-Line-Signature header value
+    signature = request.headers['X-Line-Signature']
 
-    line_bot_api.push_message(user_id, messages)
+    # get request body as text
+    body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
 
+    # handle webhook body
+    try:
+        handler.handle(body, signature)
+    except InvalidSignatureError:
+        abort(400)
 
+    return 'OK'
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.message.text))
 
 if __name__ == "__main__":
-    main()
+#    app.run()
+
+    port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
