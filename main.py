@@ -1,7 +1,3 @@
-# メインファイル
-# botの制御を行う
-# coding by rurito
-
 from flask import Flask, request, abort
 
 from linebot import (
@@ -17,20 +13,15 @@ import os
 
 app = Flask(__name__)
 
-# line botのアクセストークンを持ってくる
-# トークン流出を避けるため別のテキストファイルでトークンを管理しています。
+#環境変数取得
+YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
+YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 
-f = open('token.txt')
-lines = f.readline()
-line_bot_api = LineBotApi(lines.replace('\n',''))
-
-t = open('handle.txt')
-lines = t.readline()
-handler = WebhookHandler(lines.replace('\n',''))
+line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
+handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 @app.route("/callback", methods=['POST'])
 def callback():
-
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
 
@@ -46,14 +37,15 @@ def callback():
 
     return 'OK'
 
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
 
+
 if __name__ == "__main__":
 #    app.run()
-
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
