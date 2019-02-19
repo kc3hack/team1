@@ -23,7 +23,7 @@ class station_search:
         return min_dist
 
     def station_list( self ):
-        file_list = glob.glob("*.txt")
+        file_list = glob.glob("station_list/*.txt")
         station_main = []
         
         for i in range( 0, len(file_list) ):
