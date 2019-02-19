@@ -7,7 +7,7 @@ def min_dist_station( la, lo ):
 
     for i in range( 0, len( station_data ) ):
         station_data[i]["dist"] = min_dist( la, lo,  station_data[i]["point"][0], station_data[i]["point"][1] )
-
+        
     station_data.sort( key = lambda x: x["dist"] )
     return station_data[0]["name"]
         
