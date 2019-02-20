@@ -28,11 +28,21 @@ def search(word="たこ焼き"):
     hoge = list(itertools.chain.from_iterable(result))
     return hoge
 
-
-if __name__ == '__main__':
-    # print(len(search("たこ焼き")))
+def save():
     with open('takoyaki.pickle', mode='wb') as f:
         pickle.dump(search("たこ焼き"), f)
     with open('okonomiyaki.pickle', mode='wb') as f:
         pickle.dump(search("お好み焼き"), f)
+
+def load():
+    with open('takoyaki.pickle', mode='rb') as f:
+        a = pickle.load(f)
+    with open('okonomiyaki.pickle', mode='rb') as f:
+        b = pickle.load(f)
+    return a, b
+
+if __name__ == '__main__':
+    save()
+    print(len(load()[0]))
+    print(len(load()[1]))
 
