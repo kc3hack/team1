@@ -26,4 +26,4 @@ def execute( latitude, longitude , food_name, per_time):
         
     print( station_list )
     return station_list
-execute( 34.982353, 135.961761, "たこ焼き", 5)
+#execute( 34.982353, 135.961761, "たこ焼き", 5)
