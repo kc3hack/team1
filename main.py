@@ -11,6 +11,7 @@ from linebot.models import (
 )
 import os
 import json
+import st_main
 
 app = Flask(__name__)
 
@@ -55,8 +56,29 @@ def handle_message(event):
             )
         # 食べたいものを入力してもらった時
         elif event.message.text == "お好み焼き" or event.message.text == "たこ焼き":
-
-            #位置情報の入力を求める
+           
+            # 選択されたデータを保存する
+            f = open('data.txt')
+            f.write(event.message.text+"\n")
+            f.close()
+            
+            # 検索数の入力を求める
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text='現在地から近い順にお店を表示します'),
+                    TextSendMessage(text='欲しい店舗の数を教えてください!'),
+                ]
+            )
+            
+        # 結果を表示する数を受け取った時
+        elif event.message.text.isdecimal():
+            # 選択されたデータを保存する
+            f = open('data.txt')
+            f.write(event.message.text+"\n")
+            f.close()
+            
+            # 位置情報の入力を求める
             line_bot_api.reply_message(
                 event.reply_token,
                 [
@@ -66,11 +88,6 @@ def handle_message(event):
                 ]
             )
 
-        # 結果を表示する数を受け取った時
-        elif event.message.text.isdecimal():
-            # 検索結果を返す
-            print(event.type.text)
-        
         # 例外処理
         else:
             line_bot_api.reply_message(
@@ -86,7 +103,7 @@ def handle_message(event):
 def hanndle_get_map(event):
     print(event.message.latitude)
     print(event.message.longitude)
-
+    
 
 
 # 画像を受け取った時
