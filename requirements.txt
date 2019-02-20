@@ -3,7 +3,6 @@ line-bot-sdk==1.8.0
 bs4
 request
 parse
-json
 itertools
 math
 time
