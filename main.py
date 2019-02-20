@@ -118,10 +118,12 @@ def hanndle_get_map(event):
     for i in text:
         return_text += str(i) + "\n"
 
+            
+    print(type(TextSendMessage(text = text)))
     line_bot_api.reply_message(
         event.reply_token,
         [
-            TextSendMessage(return_text),
+            TextSendMessage(text = text),
         ]
     )
 
