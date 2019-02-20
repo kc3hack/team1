@@ -1,4 +1,4 @@
-from chainer.links import ResNet152Layers
+from chainer.links import ResNet101Layers
 import numpy as np
 from sklearn import datasets
 import numpy as np
@@ -8,8 +8,8 @@ from sklearn.metrics import accuracy_score
 import learn_data
 import chainer.computational_graph as c
 
-def make_vec(image_x = [], image_y = [], test_num = 5):
-    model = ResNet152Layers()
+def make_vec(image_x = [], image_y = [], test_num = 10):
+    model = ResNet101Layers()
 
     vec_0 = []
     vec_1 = []
@@ -30,17 +30,23 @@ def learn(x_train, y_train, x_test, y_test, kernel='rbf'):
     svm.fit(x_train, y_train)
     print(svm.predict(x_test))
     print(y_test)
-    acc = accuracy_score(y_test, svm.predict(x_test))
-    # print('acc： %d%%' % acc*100)
+    print(svm.predict(x_train))
+    print(np.sum(y_train==0))
+    train_acc = accuracy_score(y_train, svm.predict(x_train))
+    test_acc = accuracy_score(y_test, svm.predict(x_test))
+    print('train acc： %.1f%%' % (train_acc*100))
+    print('test acc ： %.1f%%' % (test_acc*100))
 
 def main():
-    # x_0, x_1 = learn_data.execute()
-    # hoge = make_vec(x_0, x_1)
-    # np.savez("vector1.npz", *hoge)
-    fuga = np.load("vector.npz")
-    hoge = [fuga[x] for x in fuga.files]
+    x_0, x_1 = learn_data.execute()
+    print(len(x_0))
+    print(len(x_1))
+    hoge = make_vec(x_0, x_1)
+    np.savez("vector.npz", *hoge)
+    # fuga = np.load("vector.npz")
+    # hoge = [fuga[x] for x in fuga.files]
     # for x in hoge:
-    #     print(x)
+    #     print(x.shape)
     #     print(np.linalg.norm(x))
     learn(*hoge)
 
