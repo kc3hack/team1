@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 import cv2
 import os
+dir(tf.contrib)
 
 def execute( img ):
     size = ( 224, 224 )
@@ -10,6 +11,7 @@ def execute( img ):
     print( check )
     
 def predict(image):
+
     graph_def = tf.GraphDef()
 
     with tf.gfile.FastGFile("model.pb", 'rb') as f:
