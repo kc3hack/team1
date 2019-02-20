@@ -1,7 +1,8 @@
 flask==0.12
 line-bot-sdk==1.8.0
 bs4
-urllib
+request
+parse
 json
 itertools
 math
