@@ -115,8 +115,8 @@ def hanndle_get_map(event):
             text.append(data["url"])
    
     return_text = ""
-    for i in len(text):
-        return_text += "TextSendMessage(text=text["+ i + "]),"
+    for i in text:
+        return_text += "TextSendMessage(text="+ i + "),"
 
     line_bot_api.reply_message(
         event.reply_token,
