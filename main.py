@@ -12,6 +12,7 @@ from linebot.models import (
 import os
 import json
 from st_main import execute
+from io import BytesIO
 
 app = Flask(__name__)
 
