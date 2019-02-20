@@ -77,16 +77,18 @@ def handle_message(event):
             )
             
         # 結果を表示する数を受け取った時
-        elif event.message.text.isdecimal() and lines[0] == "flag\n":
+        elif event.message.text.isdecimal():
             # 選択されたデータを保存する
             f.write(event.message.text+"\n")
             f.close()
-            
+
+            file = open('data.txt')
+            data = file.readlines()
             # 位置情報の入力を求める
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text='これから'+event.message.text+'のお店を検索するよ！'),
+                    TextSendMessage(text='これから'+data[0]+'のお店を検索するよ！'),
                     TextSendMessage(text='位置情報を送ってね！'),
                     TextSendMessage(text='line://nv/location'),
                 ]
