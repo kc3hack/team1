@@ -123,8 +123,7 @@ def hanndle_get_map(event):
 
             
     line_bot_api.reply_message(
-        event.reply_token,
-        return_text
+        event.reply_token,[TextSendMessage(text = "a"),TextSendMessage(text = "b")]
     )
 
 
