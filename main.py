@@ -147,9 +147,12 @@ def hanndle_get_map(event):
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_get_picture(event):
 
+    message_id = event.message.id
+    message_content = line_bot_api.get_message_content(message_id)
 
-    event.message.text = "testest"
-            
+    image = BytesIO(message_content.content)
+    print(type(image))
+       
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
