@@ -101,6 +101,7 @@ def handle_message(event):
 
         # 例外処理
         else:
+            f = open('data.txt','a')
             lines = f.readlines()
             del lines[:]
             f.close()
