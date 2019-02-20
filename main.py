@@ -113,7 +113,7 @@ def hanndle_get_map(event):
     f = open('data.txt')
     lines = f.readlines()
 
-    data_list = execute(event.message.latitude, event.message.longitude, lines[1], int(lines[2])) 
+    data_list = execute(event.message.latitude, event.message.longitude, lines[0], int(lines[1])) 
     text = []
     for data in data_list:
         if str(data["spend"]).isdecimal():
