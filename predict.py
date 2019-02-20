@@ -18,7 +18,7 @@ def predict(image):
 
     with tf.Session() as sess:
         prob_tensor = sess.graph.get_tensor_by_name('loss:0')
-        predictions, = sess.run(prob_tensor, {'Placeholder:0': [x] })
+        predictions, = sess.run(prob_tensor, {'Placeholder:0': [image] })
         return np.argmax(predictions)
 
 im = cv2.imread( "takoyaki/1.jpeg" )
