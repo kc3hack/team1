@@ -65,9 +65,10 @@ def handle_message(event):
             f.write(event.message.text+"\n")
             f.close()
             
-            file = open('data.txt')
+            file = open('data.txt', "r")
             data = file.readlines()
             print(data)
+            file.close()
 
             # 検索数の入力を求める
             line_bot_api.reply_message(
@@ -85,9 +86,10 @@ def handle_message(event):
             f.write(event.message.text+"\n")
             f.close()
 
-            file = open('data.txt')
+            file = open('data.txt', "r")
             data = file.readlines()
             print(data)
+            file.close()
             # 位置情報の入力を求める
             line_bot_api.reply_message(
                 event.reply_token,
@@ -97,11 +99,10 @@ def handle_message(event):
                     TextSendMessage(text='line://nv/location'),
                 ]
             )
-            f.close()
 
         # 例外処理
         else:
-            f = open('data.txt','a')
+            f = open('data.txt','r')
             lines = f.readlines()
             del lines[:]
             f.close()
@@ -116,7 +117,7 @@ def handle_message(event):
 # 位置情報を受け取った時
 @handler.add(MessageEvent, message=LocationMessage)
 def hanndle_get_map(event):
-    f = open('data.txt','a')
+    f = open('data.txt','r')
     lines = f.readlines()
     print(lines)
     data_list = execute(event.message.latitude, event.message.longitude, lines[0], int(lines[1])) 
@@ -145,7 +146,7 @@ def hanndle_get_map(event):
 def handle_get_picture(event):
 
 
-    event.message.text = "test"
+    event.message.text = "testest"
             
     line_bot_api.reply_message(
         event.reply_token,
