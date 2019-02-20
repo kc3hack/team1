@@ -58,7 +58,7 @@ def handle_message(event):
         elif event.message.text == "お好み焼き" or event.message.text == "たこ焼き":
            
             # 選択されたデータを保存する
-            f = open('data.txt')
+            f = open('data.txt','w')
             f.write(event.message.text+"\n")
             f.close()
             
@@ -74,7 +74,7 @@ def handle_message(event):
         # 結果を表示する数を受け取った時
         elif event.message.text.isdecimal():
             # 選択されたデータを保存する
-            f = open('data.txt')
+            f = open('data.txt','w')
             f.write(event.message.text+"\n")
             f.close()
             
@@ -103,7 +103,7 @@ def handle_message(event):
 def hanndle_get_map(event):
     print(event.message.latitude)
     print(event.message.longitude)
-    
+    execute(event.message.latitude, event.message.longitude, "たこ焼き", 5) 
 
 
 # 画像を受け取った時
