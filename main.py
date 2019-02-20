@@ -104,21 +104,24 @@ def hanndle_get_map(event):
     print(event.message.latitude)
     print(event.message.longitude)
     data_list = execute(event.message.latitude, event.message.longitude, "たこ焼き", 5) 
+    text = []
     for data in data_list:
         print(data)
         if str(data["spend"]).isdecimal():
-            text = str(data["departure"]) + "駅から" + str(data["arrival"]) + "駅まで電車で移動してそこから徒歩" + str(data["spend"]) + "分にあるお店です。"
+            text.append(str(data["departure"]) + "駅から" + str(data["arrival"]) + "駅まで電車で移動してそこから徒歩" + str(data["spend"]) + "分にあるお店です。")
+            text.append(data["url"])
         else:
-            text = str(data["spend"]) + "圏内にあるお店です。"
+            text.append(str(data["spend"]) + "圏内にあるお店です。")
+            text.append(data["url"])
 
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text=text),
-                TextSendMessage(text=data["url"]),
-            ]
-        )
+    line_bot_api.reply_message(
+        event.reply_token,
+        [
+            for i in range(0,5 * 2,2):
+                TextSendMessage(text=text[i]),
+                TextSendMessage(text=text[i+1]),
+        ]
+    )
 
 
 # 画像を受け取った時
