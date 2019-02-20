@@ -93,7 +93,7 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text='何をいっているのかまるでわからない'),
+                    textsendmessage(text='何をいっているのかまるでわからない'),
                 ]
             )
 
@@ -106,6 +106,19 @@ def hanndle_get_map(event):
     data_list = execute(event.message.latitude, event.message.longitude, "たこ焼き", 5) 
     for data in data_list:
         print(data)
+        if str(data["spend"]).isdecimal():
+            text += str(data["departure"]) + "駅から" + str(data["arrival"]) + "駅まで電車で移動してそこから徒歩" + str(data["spend"]) + "分にあるお店です。"
+        else:
+            text += str(data["spend"]) + "圏内にあるお店です。"
+
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                textsendmessage(text=text),
+                textsendmessage(text=data["url"]),
+            ]
+        )
 
 
 # 画像を受け取った時
