@@ -115,7 +115,7 @@ def handle_message(event):
 # 位置情報を受け取った時
 @handler.add(MessageEvent, message=LocationMessage)
 def hanndle_get_map(event):
-    f = open('data.txt')
+    f = open('data.txt','a')
     lines = f.readlines()
     print(lines)
     data_list = execute(event.message.latitude, event.message.longitude, lines[0], int(lines[1])) 
