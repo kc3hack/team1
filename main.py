@@ -121,9 +121,11 @@ def hanndle_get_map(event):
     lines = f.readlines()
     print(lines)
     data_list = execute(event.message.latitude, event.message.longitude, lines[0], int(lines[1])) 
-    
-    del lines[:]
     f.close()
+
+    file = open("data.txt", "w")
+    del lines[:]
+    file.close()
 
     text = []
     for data in data_list:
