@@ -18,6 +18,7 @@ def search(word="たこ焼き"):
                 break
             a = json.loads(html)
             for x in a["rest"]:
+                if x["latitude"]=="" or x["longitude"]=="": continue
                 fuga.append({"id":x["id"], "url": x["url"], "latitude": x["latitude"], "longitude": x["longitude"]})
         return fuga
     pool = ThreadPoolExecutor(max_workers=32)
@@ -29,7 +30,9 @@ def search(word="たこ焼き"):
 
 
 if __name__ == '__main__':
+    # print(len(search("たこ焼き")))
     with open('takoyaki.pickle', mode='wb') as f:
         pickle.dump(search("たこ焼き"), f)
     with open('okonomiyaki.pickle', mode='wb') as f:
         pickle.dump(search("お好み焼き"), f)
+
