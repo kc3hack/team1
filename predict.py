@@ -2,13 +2,16 @@ import tensorflow as tf
 import numpy as np
 import cv2
 import os
-dir(tf.contrib)
 
 def execute( img ):
     size = ( 224, 224 )
     new_img = cv2.resize( img, size )
     check = predict( new_img )
-    print( check )
+    if check == 0:
+        return "お好み焼き"
+    elif check == 1:
+        return "たこ焼き"
+    return "わからない"
     
 def predict(image):
 
@@ -23,6 +26,6 @@ def predict(image):
         predictions, = sess.run(prob_tensor, {'Placeholder:0': [image] })
         return np.argmax(predictions)
 
-im = cv2.imread( "takoyaki/1.jpeg" )
-execute(im)
+#im = cv2.imread( "okonomiyaki/001.jpg" )
+#print(execute(im))
 
