@@ -103,7 +103,7 @@ def handle_message(event):
 def hanndle_get_map(event):
     print(event.message.latitude)
     print(event.message.longitude)
-    data_list = execute(event.message.latitude, event.message.longitude, "たこ焼き", 5) 
+    data_list = execute(event.message.latitude, event.message.longitude, "たこ焼き", 2) 
     text = []
     for data in data_list:
         print(data)
