@@ -154,11 +154,6 @@ def handle_get_picture(event):
     image = BytesIO(message_content.content)
     print(type(image))
        
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
-
-
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT", 5000))
