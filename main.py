@@ -44,7 +44,6 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    f = open('data.txt','w')
 
     if event.type == "message":
 
@@ -52,8 +51,6 @@ def handle_message(event):
         if event.message.text == "お腹空いた":
             
             # 選択されたデータを保存する
-            f.close()
-
             line_bot_api.reply_message(
                 event.reply_token,
                 [
@@ -63,6 +60,7 @@ def handle_message(event):
         # 食べたいものを入力してもらった時
         elif event.message.text == "お好み焼き" or event.message.text == "たこ焼き":
            
+            f = open('data.txt','w')
             # 選択されたデータを保存する
             f.write(event.message.text+"\n")
             f.close()
@@ -83,6 +81,7 @@ def handle_message(event):
         # 結果を表示する数を受け取った時
         elif event.message.text.isdecimal():
             # 選択されたデータを保存する
+            f = open('data.txt','w')
             f.write(event.message.text+"\n")
             f.close()
 
