@@ -103,16 +103,14 @@ def handle_message(event):
 def hanndle_get_map(event):
     print(event.message.latitude)
     print(event.message.longitude)
-    data_list = execute(event.message.latitude, event.message.longitude, "たこ焼き", 2) 
+    data_list = execute(event.message.latitude, event.message.longitude, "たこ焼き", 5) 
     text = []
     for data in data_list:
         print(data)
         if str(data["spend"]).isdecimal():
-            text.append(str(data["departure"]) + "駅から" + str(data["arrival"]) + "駅まで電車で移動してそこから徒歩" + str(data["spend"]) + "分にあるお店です。")
-            text.append(data["url"])
+            text.append(str(data["departure"]) + "駅から" + str(data["arrival"]) + "駅まで電車で移動してそこから徒歩" + str(data["spend"]) + "分にあるお店です。\n" + data["url"])
         else:
-            text.append(str(data["spend"]) + "圏内にあるお店です。")
-            text.append(data["url"])
+            text.append(str(data["spend"]) + "圏内にあるお店です。\n" + data["url"])
    
     return_text = []
     for i in text:
