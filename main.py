@@ -44,10 +44,13 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+
     if event.type == "message":
 
         # botを起動するとき
         if event.message.text == "お腹空いた":
+            
+            # 選択されたデータを保存する
             line_bot_api.reply_message(
                 event.reply_token,
                 [
@@ -57,11 +60,16 @@ def handle_message(event):
         # 食べたいものを入力してもらった時
         elif event.message.text == "お好み焼き" or event.message.text == "たこ焼き":
            
+            f = open('data.txt','a')
             # 選択されたデータを保存する
-            f = open('data.txt','w')
             f.write(event.message.text+"\n")
             f.close()
             
+            file = open('data.txt', "r")
+            data = file.readlines()
+            print(data)
+            file.close()
+
             # 検索数の入力を求める
             line_bot_api.reply_message(
                 event.reply_token,
@@ -74,15 +82,19 @@ def handle_message(event):
         # 結果を表示する数を受け取った時
         elif event.message.text.isdecimal():
             # 選択されたデータを保存する
-            f = open('data.txt','w')
+            f = open('data.txt','a')
             f.write(event.message.text+"\n")
             f.close()
-            
+
+            file = open('data.txt', "r")
+            data = file.readlines()
+            print(data)
+            file.close()
             # 位置情報の入力を求める
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text='これから'+event.message.text+'のお店を検索するよ！'),
+                    TextSendMessage(text='これから'+data[0]+'のお店を検索するよ！'),
                     TextSendMessage(text='位置情報を送ってね！'),
                     TextSendMessage(text='line://nv/location'),
                 ]
@@ -90,10 +102,14 @@ def handle_message(event):
 
         # 例外処理
         else:
+            f = open('data.txt','r')
+            lines = f.readlines()
+            del lines[:]
+            f.close()
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    textsendmessage(text='何をいっているのかまるでわからない'),
+                    TextSendMessage(text='何をいっているのかまるでわからない'),
                 ]
             )
 
@@ -101,29 +117,29 @@ def handle_message(event):
 # 位置情報を受け取った時
 @handler.add(MessageEvent, message=LocationMessage)
 def hanndle_get_map(event):
-    print(event.message.latitude)
-    print(event.message.longitude)
-    data_list = execute(event.message.latitude, event.message.longitude, "たこ焼き", 5) 
+    f = open('data.txt','r')
+    lines = f.readlines()
+    print(lines)
+    data_list = execute(event.message.latitude, event.message.longitude, lines[0], int(lines[1])) 
+    f.close()
+
+    file = open("data.txt", "w")
+    del lines[:]
+    file.close()
+
     text = []
     for data in data_list:
-        print(data)
         if str(data["spend"]).isdecimal():
-            text.append(str(data["departure"]) + "駅から" + str(data["arrival"]) + "駅まで電車で移動してそこから徒歩" + str(data["spend"]) + "分にあるお店です。")
-            text.append(data["url"])
+            text.append(str(data["departure"]) + "駅から" + str(data["arrival"]) + "駅まで電車で移動してそこから徒歩" + str(data["spend"]) + "分にあるお店です。\n" + data["url"])
         else:
-            text.append(str(data["spend"]) + "圏内にあるお店です。")
-            text.append(data["url"])
+            text.append(str(data["spend"]) + "圏内にあるお店です。\n" + data["url"])
    
-    return_text
+    return_text = []
     for i in text:
-        return_text += TextSendMessage(text = i)
+        return_text.append(TextSendMessage(text = i))
 
-            
     line_bot_api.reply_message(
-        event.reply_token,
-        [
-            return_text
-        ]
+        event.reply_token,return_text
     )
 
 
@@ -132,7 +148,7 @@ def hanndle_get_map(event):
 def handle_get_picture(event):
 
 
-    event.message.text = "test"
+    event.message.text = "testest"
             
     line_bot_api.reply_message(
         event.reply_token,
