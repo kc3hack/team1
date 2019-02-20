@@ -67,6 +67,10 @@ def handle_message(event):
             f.write(event.message.text+"\n")
             f.close()
             
+            file = open('data.txt')
+            data = file.readlines()
+            print(data)
+
             # 検索数の入力を求める
             line_bot_api.reply_message(
                 event.reply_token,
@@ -84,6 +88,7 @@ def handle_message(event):
 
             file = open('data.txt')
             data = file.readlines()
+            print(data)
             # 位置情報の入力を求める
             line_bot_api.reply_message(
                 event.reply_token,
@@ -93,6 +98,7 @@ def handle_message(event):
                     TextSendMessage(text='line://nv/location'),
                 ]
             )
+            f.close()
 
         # 例外処理
         else:
@@ -112,6 +118,7 @@ def handle_message(event):
 def hanndle_get_map(event):
     f = open('data.txt')
     lines = f.readlines()
+    print(lines)
 
     data_list = execute(event.message.latitude, event.message.longitude, lines[0], int(lines[1])) 
     text = []
