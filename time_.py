@@ -9,7 +9,7 @@ def execute( current_latitude, current_longitude , food_name):
         if len( shop_list[i]["latitude"] ) == 0\
            or len( shop_list[i]["longitude"] ) == 0:
             
-            shop_list[i]["dist"] == 100000000
+            shop_list[i]["dist"] = 100000000
         else:
             shop_list[i]["dist"] = min_dist( float( shop_list[i]["latitude"] ),  float( shop_list[i]["longitude"] ), current_latitude, current_longitude)
             
