@@ -4,8 +4,14 @@ import api
 
 def execute( current_latitude, current_longitude , food_name):
     shop_list = api.search( food_name )
+    
     for i in range( 0, len( shop_list )):
-        shop_list[i]["dist"] = min_dist( float( shop_list[i]["latitude"] ),  float( shop_list[i]["longitude"] ), current_latitude, current_longitude)
+        if len( shop_list[i]["latitude"] ) == 0\
+           or len( shop_list[i]["longitude"] ) == 0:
+            
+            shop_list[i]["dist"] == 100000000
+        else:
+            shop_list[i]["dist"] = min_dist( float( shop_list[i]["latitude"] ),  float( shop_list[i]["longitude"] ), current_latitude, current_longitude)
             
     shop_list.sort( key = lambda x: x["dist"])
     
