@@ -5,6 +5,7 @@ import numpy as np
 from sklearn import datasets
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
+import learn_data
 
 def learn(image_x = [], image_y = [], vec = [], test_num = 5):
     model = ResNet152Layers()
@@ -20,3 +21,11 @@ def learn(image_x = [], image_y = [], vec = [], test_num = 5):
 
     acc = accuracy_score(y_train, svm.predict(vec))
     print('acc： %d%%' % acc*100)
+
+def main():
+    x, y = learn_data.execute()
+    print(x)
+    print(y)
+
+if __name__ == '__main__':
+    main()
