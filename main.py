@@ -114,16 +114,13 @@ def hanndle_get_map(event):
             text.append(str(data["spend"]) + "圏内にあるお店です。")
             text.append(data["url"])
    
-    return_text
+    return_text = []
     for i in text:
-        return_text += TextSendMessage(text = i)
+        return_text.append(TextSendMessage(text = i))
 
             
     line_bot_api.reply_message(
-        event.reply_token,
-        [
-            return_text
-        ]
+        event.reply_token,return_text
     )
 
 
