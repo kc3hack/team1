@@ -7,6 +7,8 @@ class root_seach:
         self.departure_name = name
         
     def time(self, arrival_name):
+        if self.departure_name == arrival_name:
+            return 0, 0, "徒歩"
         url = "https://transit.yahoo.co.jp/search/result?flatlon=&from=" + self.departure_name + "&tlatlon=&to=" + arrival_name
         get_data = requests.get(url)
         soup =BeautifulSoup( get_data.text, "lxml")
