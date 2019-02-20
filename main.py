@@ -7,9 +7,10 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, LocationMessage, ImageMessage
 )
 import os
+import json
 
 app = Flask(__name__)
 
@@ -29,7 +30,9 @@ def callback():
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
-    # handle webhook body
+    tmp = json.loads(body)
+
+    # handle webhook bodya
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
@@ -40,6 +43,59 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    if event.type == "message":
+
+        # botを起動するとき
+        if event.message.text == "お腹空いた":
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text='お好み焼きかたこ焼き、どちらが食べたいですか？'),
+                ]
+            )
+        # 食べたいものを入力してもらった時
+        elif event.message.text == "お好み焼き" or event.message.text == "たこ焼き":
+
+            #位置情報の入力を求める
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text='これから'+event.message.text+'のお店を検索するよ！'),
+                    TextSendMessage(text='位置情報を送ってね！'),
+                    TextSendMessage(text='line://nv/location'),
+                ]
+            )
+
+        # 結果を表示する数を受け取った時
+        elif event.message.text.isdecimal():
+            # 検索結果を返す
+            print(event.type.text)
+        
+        # 例外処理
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text='何をいっているのかまるでわからない'),
+                ]
+            )
+
+
+# 位置情報を受け取った時
+@handler.add(MessageEvent, message=LocationMessage)
+def hanndle_get_map(event):
+    print(event.message.latitude)
+    print(event.message.longitude)
+
+
+
+# 画像を受け取った時
+@handler.add(MessageEvent, message=ImageMessage)
+def handle_get_picture(event):
+
+
+    event.message.text = "test"
+            
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
