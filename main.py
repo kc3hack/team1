@@ -155,7 +155,7 @@ def handle_get_picture(event):
 
     img_pin = BytesIO(message_content.content)
     image = Image.open(img_pin)
-    imgArray = numpy.asarray(image)
+    imgArray = np.asarray(image)
 
     print(type(imgArray))
        
