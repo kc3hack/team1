@@ -151,7 +151,8 @@ def handle_get_picture(event):
     message_id = event.message.id
     message_content = line_bot_api.get_message_content(message_id)
 
-    print(type(message_content))
+    #image = BytesIO(message_content.content)
+    print(type(message_content.content))
        
 if __name__ == "__main__":
 #    app.run()
