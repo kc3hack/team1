@@ -35,7 +35,7 @@ def callback():
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
     
-    # json
+    # json2
     tmp = json.loads(body)
 
     # handle webhook bodya
