@@ -13,6 +13,7 @@ import os
 import json
 from st_main import execute
 from io import BytesIO
+from PIL import Image
 
 app = Flask(__name__)
 
@@ -151,8 +152,10 @@ def handle_get_picture(event):
     message_id = event.message.id
     message_content = line_bot_api.get_message_content(message_id)
 
-    #image = BytesIO(message_content.content)
-    print(type(message_content.content))
+    img_pin = BytesIO(message_content.content)
+    image = Image.open(img_pin)
+
+    print(type(image))
        
 if __name__ == "__main__":
 #    app.run()
