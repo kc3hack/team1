@@ -7,4 +7,4 @@ lxml
 Image
 numpy
 tensorflow
-cv
+opencv2
