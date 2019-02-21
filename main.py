@@ -14,6 +14,7 @@ import json
 from st_main import execute
 from io import BytesIO
 from PIL import Image
+import numpy as np
 
 app = Flask(__name__)
 
@@ -154,8 +155,9 @@ def handle_get_picture(event):
 
     img_pin = BytesIO(message_content.content)
     image = Image.open(img_pin)
+    imgArray = numpy.asarray(image)
 
-    print(type(image))
+    print(type(imgArray))
        
 if __name__ == "__main__":
 #    app.run()
