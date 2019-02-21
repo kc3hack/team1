@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 import itertools
 import pickle
 
-API_KEY = "041bf926060de0bdcbe537265b4c78ea"
+API_KEY = "3fcdbaa2b34fc211c86ceddeb1b7ab8c"
 
 def search(word="たこ焼き"):
     def foo(area):
