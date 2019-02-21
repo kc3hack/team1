@@ -6,3 +6,5 @@ parse
 lxml
 Image
 numpy
+tensorflow
+cv2
