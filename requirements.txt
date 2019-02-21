@@ -7,3 +7,4 @@ lxml
 Image
 numpy
 tensorflow
+cv
